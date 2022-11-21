@@ -73,7 +73,7 @@ const Task = ({
           <Button onClick={() => onHandleEditTask(id)} type="text">
             <Edit color="#54b4d3" />
           </Button>
-          <Button className="ml-[4px]" onClick={onDelete} type="text">
+          <Button className="ml-[6px]" onClick={onDelete} type="text">
             <Delete color="#e15264" />
           </Button>
         </div>

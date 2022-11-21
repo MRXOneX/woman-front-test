@@ -55,7 +55,7 @@ export default function Add() {
           />
 
           <Button onClick={onAdd} >
-            <span className="mr-[7px]">Image</span>
+            <span className="mr-[5px]">Image</span>
             <svg
               width="20"
               height="20"
