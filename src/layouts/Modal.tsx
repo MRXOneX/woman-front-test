@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Button from "../components/UI/Button";
-import Close from "../components/UI/Icons/Close";
+import Close from "../components/Icons/Close";
 
 const Modal = ({ isOpen, content, onClose }: any) => {
   return (
@@ -11,7 +11,7 @@ const Modal = ({ isOpen, content, onClose }: any) => {
     >
       {/* CONTENT */}
       <div className="bg-white relative rounded-[10px] p-[15px]">
-        <Button className="absolute right-[-40px] top-[-30px]" onClick={onClose} type="transparent">
+        <Button className="absolute right-[-40px] top-[-30px]" onClick={onClose} variant="transparent">
           <Close color="blue" />
         </Button>
 

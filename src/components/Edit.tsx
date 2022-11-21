@@ -4,10 +4,11 @@ import { doc, getDoc } from "firebase/firestore";
 // types
 import { TTask } from "../types/task";
 // components
-import Loading from "../components/Loading";
+import Loading from "./Loading";
 // other
 import { db } from "../firebase";
-import Button from "../components/UI/Button";
+import Button from "./UI/Button";
+import Textarea from "./UI/Textarea";
 
 const Edit = ({ taskId }: any) => {
   const [task, setTask] = useState<TTask | null>(null);
@@ -69,25 +70,17 @@ const Edit = ({ taskId }: any) => {
                 </svg>
               </Button>
 
-              <Button>
+              <Button className="ml-[10px]">
                 <span>Save</span>
               </Button>
             </div>
           </div>
-          <label
-            className="text-gray-700 mt-[15px] w-full"
-            htmlFor="description"
-          >
-            <textarea
-              className="w-full appearance-none resize-none border border-gray-300 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-              id="description"
-              //   value={description}
-              //   onChange={(e) => setDescription(e.target.value)}
-              placeholder="Description"
-              name="description"
-              rows={2}
-            ></textarea>
-          </label>
+          <Textarea
+            placeholder="description"
+            value={task?.description}
+            onChange={(e: any) => e}
+            className="mt-[15px]"
+          />
         </>
       )}
     </div>

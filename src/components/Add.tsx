@@ -7,10 +7,13 @@ import uniqid from "uniqid";
 import { db } from "../firebase";
 import { TTask } from "../types/task";
 import Button from "./UI/Button";
+import Input from "./UI/Input";
+import Textarea from "./UI/Textarea";
 
 export default function Add() {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [date, setDate] = useState<any>(undefined);
 
   const [loading, setLoading] = useState<
     "idle" | "loading" | "success" | "error"
@@ -35,26 +38,27 @@ export default function Add() {
     }
   };
 
+  console.log(date);
+
   return (
     <div className="shadow-sm flex w-[700px] flex-col items-center p-[15px] rounded-[10px] bg-white">
       <div className="flex w-full items-center justify-between">
         <div className="relative ">
-          <input
-            type="text"
-            id="title"
+          <Input
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className=" rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+            onChange={(e: any) => setTitle(e.target.value)}
             placeholder="Title"
           />
         </div>
         <div className="flex justify-between items-center">
-          <input
-            className="rounded-lg outline-none mx-[10px] border-transparent py-2 px-2 appearance-none border border-gray-300"
+          <Input
+            value={date}
+            onChange={(e: any) => setDate(e.target.value)}
+            variant="datetime"
             type="datetime-local"
           />
 
-          <Button onClick={onAdd} >
+          <Button onClick={onAdd}>
             <span className="mr-[5px]">Image</span>
             <svg
               width="20"
@@ -67,22 +71,21 @@ export default function Add() {
             </svg>
           </Button>
 
-          <Button onClick={onAdd} isLoading={loading === "loading"}>
+          <Button
+            className="ml-[10px]"
+            onClick={onAdd}
+            isLoading={loading === "loading"}
+          >
             Add
           </Button>
         </div>
       </div>
-      <label className="text-gray-700 mt-[15px] w-full" htmlFor="description">
-        <textarea
-          className="w-full appearance-none resize-none border border-gray-300 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          name="description"
-          rows={2}
-        ></textarea>
-      </label>
+      <Textarea
+        placeholder="description"
+        value={description}
+        onChange={(e: any) => setDescription(e.target.value)}
+        className="mt-[15px]"
+      />
     </div>
   );
 }

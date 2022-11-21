@@ -9,9 +9,10 @@ import { db } from "../firebase";
 // types
 import { TTask } from "../types/task";
 // components/UI/Icons
-import Delete from "./UI/Icons/Delete";
-import Edit from "./UI/Icons/Edit";
+import Delete from "./Icons/Delete";
+import Edit from "./Icons/Edit";
 import Button from "./UI/Button";
+import Input from "./UI/Input";
 
 dayjs.locale("ru");
 
@@ -70,10 +71,10 @@ const Task = ({
       </div>
       <div className="flex  items-end flex-col">
         <div className="flex items-center">
-          <Button onClick={() => onHandleEditTask(id)} type="text">
+          <Button onClick={() => onHandleEditTask(id)} variant="text">
             <Edit color="#54b4d3" />
           </Button>
-          <Button className="ml-[6px]" onClick={onDelete} type="text">
+          <Button className="ml-[6px]" onClick={onDelete} variant="text">
             <Delete color="#e15264" />
           </Button>
         </div>

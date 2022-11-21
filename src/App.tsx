@@ -10,7 +10,8 @@ import Add from "./components/Add";
 import { TTask } from "./types/task";
 import Loading from "./components/Loading";
 import Modal from "./layouts/Modal";
-import Edit from "./modals/Edit";
+import Edit from "./components/Edit";
+import Editor from "./components/Editor";
 
 function App() {
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
@@ -30,12 +31,9 @@ function App() {
         // const tasksSnapshot = await getDocs(tasksCol);
         // const taskList: TTask[] = tasksSnapshot.docs.map((doc) => doc.data());
 
-        const unsubscribe = onSnapshot(
-          collection(db, "tasks"),
-          (snapshot) => {
-            setTasks(snapshot.docs.map((doc) => doc.data()));
-          }
-        );
+        const unsubscribe = onSnapshot(collection(db, "tasks"), (snapshot) => {
+          setTasks(snapshot.docs.map((doc) => doc.data()));
+        });
         setLoading("success");
 
         return () => {
@@ -62,7 +60,9 @@ function App() {
       <span className="text-indigo-600 mb-[25px] text-[44px] font-bold">
         ToDo List
       </span>
-      <Add />
+      <div className="shadow-sm flex w-[700px] flex-col items-center p-[15px] rounded-[10px] bg-white">
+        <Editor />
+      </div>
 
       <div className="flex mt-[10px] flex-col overflow-y-auto max-h-[600px]">
         {loading === "success" &&

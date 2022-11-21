@@ -1,31 +1,31 @@
 type ButtonProps = {
   isLoading?: boolean;
   children: any;
-  type?: "default" | "transparent" | "text";
+  variant?: "default" | "transparent" | "text";
   onClick?: any;
   className?: string;
 };
 
 export default function Button({
   isLoading = false,
-  type = "default",
+  variant = "default",
   children,
   onClick = () => {},
   className = "",
 }: ButtonProps) {
   const getStyleBtn = () => {
-    switch (type) {
+    switch (variant) {
       case "default":
-        return `${className} bg-indigo-600 hover:bg-indigo-700 font-semibold shadow-md text-white py-[2px] px-[18px] h-10 rounded-lg`;
+        return "bg-indigo-600 hover:bg-indigo-700 font-semibold shadow-md text-white py-[2px] px-[18px] h-10 rounded-lg";
       case "transparent":
-        return `${className} p-[5px] outline-none cursor-pointer flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200`;
+        return "p-[5px] outline-none cursor-pointer flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200";
       case "text":
-        return `${className} hover:bg-[#8A63B91A] rounded-[10px] p-[5px]`;
+        return "hover:bg-[#8A63B91A] rounded-[10px] p-[5px]";
     }
   };
 
   return (
-    <button onClick={onClick} className={`flex items-center ${getStyleBtn()}`}>
+    <button onClick={onClick} className={`${className} ${getStyleBtn()} flex items-center`}>
       {isLoading && (
         <div className="mr-[5px]">
           <svg
