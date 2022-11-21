@@ -1,6 +1,6 @@
 import { memo } from "react";
 //
-import { doc, deleteDoc, Timestamp } from "firebase/firestore";
+import { doc, deleteDoc, Timestamp, updateDoc } from "firebase/firestore";
 //
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
@@ -11,14 +11,34 @@ import { TTask } from "../types/task";
 // components/UI/Icons
 import Delete from "./UI/Icons/Delete";
 import Edit from "./UI/Icons/Edit";
+import Button from "./UI/Button";
 
 dayjs.locale("ru");
 
-const Task = ({ id, title, description, expiresAt }: TTask) => {
+interface TaskProps extends TTask {
+  onHandleEditTask: any;
+}
+
+const Task = ({
+  onHandleEditTask,
+  id,
+  isChecked,
+  title,
+  description,
+  expiresAt,
+}: TaskProps) => {
+  const taskRef = doc(db, "tasks", id as string);
+
   const onDelete = async () => {
     try {
-      await deleteDoc(doc(db, "tasks", id as string));
+      await deleteDoc(taskRef);
     } catch (error) {}
+  };
+
+  const onChangeCheck = async (isCheck: boolean) => {
+    await updateDoc(taskRef, {
+      isChecked: isCheck,
+    });
   };
 
   const dateHours = dayjs(expiresAt).diff(Timestamp.now().toMillis(), "hours");
@@ -30,7 +50,15 @@ const Task = ({ id, title, description, expiresAt }: TTask) => {
   return (
     <div className="shadow-sm text-[18px] mt-[15px] justify-between items-center flex w-[700px] py-[10px] px-[15px] rounded-[10px] bg-white">
       <div className="flex items-center">
-        <span>check</span>
+        <label className="flex items-center">
+          <input
+            checked={isChecked}
+            onChange={(e) => onChangeCheck(e.target.checked)}
+            type="checkbox"
+            name="checked-demo"
+            className="form-tick cursor-pointer appearance-none bg-white bg-check h-[20px] w-[20px] border border-gray-300 rounded-md checked:bg-blue-500 checked:border-transparent focus:outline-none"
+          />
+        </label>
         <div className="flex ml-[10px] flex-col">
           <span className="leading-[26px] w-[500px] text-ellipsis overflow-hidden font-medium text-slate-800 text-[22px]">
             {title}
@@ -42,21 +70,19 @@ const Task = ({ id, title, description, expiresAt }: TTask) => {
       </div>
       <div className="flex  items-end flex-col">
         <div className="flex items-center">
-          <button className="mr-[5px] hover:bg-[#8A63B91A] rounded-[10px] p-[5px]">
+          <Button onClick={() => onHandleEditTask(id)} type="text">
             <Edit color="#54b4d3" />
-          </button>
-          <button
-            onClick={onDelete}
-            className="hover:bg-[#B437371A] rounded-[10px] p-[5px]"
-          >
+          </Button>
+          <Button className="ml-[4px]" onClick={onDelete} type="text">
             <Delete color="#e15264" />
-          </button>
+          </Button>
         </div>
         <div className="flex flex-col items-end">
           <span className="leading-[18px]">expires:</span>
           <span
             className={`${
-              (dateHours.toString().split("")[0] === "-" || dateMinutes.toString().split("")[0] === "-")
+              dateHours.toString().split("")[0] === "-" ||
+              dateMinutes.toString().split("")[0] === "-"
                 ? "text-red-400"
                 : "text-indigo-400"
             } leading-[18px]`}
