@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 //
 import { db } from "./firebase";
+// layouts
+import Modal from "./layouts/Modal";
 // components
 import Task from "./components/Task";
-import Add from "./components/Add";
+import EditTask from "./components/modals/EditTask";
+import AddTask from "./components/AddTask";
+import Loading from "./components/Loading";
 // types
 import { TTask } from "./types/task";
-import Loading from "./components/Loading";
-import Modal from "./layouts/Modal";
-import Edit from "./components/Edit";
-import Editor from "./components/Editor";
+
 
 function App() {
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
@@ -54,15 +55,13 @@ function App() {
     <div className="flex relative items-center flex-col justify-center h-full">
       <Modal
         isOpen={isOpenEdit}
-        content={<Edit taskId={taskId} />}
+        content={<EditTask taskId={taskId} />}
         onClose={() => setIsOpenEdit(false)}
       />
       <span className="text-indigo-600 mb-[25px] text-[44px] font-bold">
         ToDo List
       </span>
-      <div className="shadow-sm flex w-[700px] flex-col items-center p-[15px] rounded-[10px] bg-white">
-        <Editor />
-      </div>
+      <AddTask />
 
       <div className="flex mt-[10px] flex-col overflow-y-auto max-h-[600px]">
         {loading === "success" &&

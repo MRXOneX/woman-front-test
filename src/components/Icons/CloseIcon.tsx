@@ -1,9 +1,9 @@
-type CloseProps = {
+type CloseIconProps = {
   size?: number;
   color?: string;
 };
 
-export default function Close({ size = 20, color = "#000" }: CloseProps) {
+export default function CloseIcon({ size = 20, color = "#000" }: CloseIconProps) {
   return (
     <svg
       width={size}
